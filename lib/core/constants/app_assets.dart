@@ -15,4 +15,5 @@ abstract class AppAssets {
   static String branding = "assets/images/branding.png";
   static String quranBG = "assets/images/QuranBg.png";
   static String hadithBg = "assets/images/hadithBg.png";
+  static String islamiLogo = "assets/images/islamiLogo.png";
 }
