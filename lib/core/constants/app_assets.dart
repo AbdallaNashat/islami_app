@@ -16,4 +16,7 @@ abstract class AppAssets {
   static String quranBG = "assets/images/QuranBg.png";
   static String hadithBg = "assets/images/hadithBg.png";
   static String islamiLogo = "assets/images/islamiLogo.png";
+  static String recentlyIcon = "assets/icons/recentlyIcon.png";
+  static String suraNumIcon = "assets/icons/Sura Num.png";
+  static String quranDetailsBG = "assets/images/Soura_Details_Screen.png";
 }
