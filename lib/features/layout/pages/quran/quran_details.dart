@@ -1,14 +1,29 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:islami/core/constants/app_assets.dart';
 import 'package:islami/core/themes/app_colors.dart';
+import 'package:islami/models/sura_data.dart';
 
-class QuranDetails extends StatelessWidget {
+class QuranDetails extends StatefulWidget {
   static const String routeName = "QuranDetails";
 
-  const QuranDetails({super.key});
+  const QuranDetails({
+    super.key,
+  });
+
+  @override
+  State<QuranDetails> createState() => _QuranDetailsState();
+}
+
+class _QuranDetailsState extends State<QuranDetails> {
+  List<String> versesList = [];
 
   @override
   Widget build(BuildContext context) {
+    var args = ModalRoute.of(context)?.settings.arguments as SuraDetails;
+
+    if (versesList.isEmpty) loadData(args.id.toString());
+
     return Container(
       decoration: BoxDecoration(
         image: DecorationImage(
@@ -27,7 +42,7 @@ class QuranDetails extends StatelessWidget {
             color: AppColors.primaryColor,
           ),
           title: Text(
-            "Al-Fatiha",
+            args.nameEN,
             style: TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.bold,
@@ -39,11 +54,9 @@ class QuranDetails extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Padding(
-              padding: const EdgeInsets.only(
-                top: 25,
-              ),
+              padding: const EdgeInsets.only(top: 25, bottom: 30),
               child: Text(
-                "الفاتحة",
+                args.nameAR,
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontSize: 24,
@@ -52,9 +65,31 @@ class QuranDetails extends StatelessWidget {
                 ),
               ),
             ),
+            Expanded(
+              child: ListView.builder(
+                padding: const EdgeInsets.symmetric(horizontal: 20),
+                itemBuilder: (context, index) => Text(
+                  "[${index + 1}] ${versesList[index]} ",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                    color: AppColors.primaryColor,
+                  ),
+                ),
+                itemCount: versesList.length,
+              ),
+            ),
           ],
         ),
       ),
     );
+  }
+
+  void loadData(String suraId) async {
+    String content = await rootBundle.loadString("assets/files/$suraId.txt");
+    setState(() {
+      versesList = content.split("\n");
+    });
   }
 }

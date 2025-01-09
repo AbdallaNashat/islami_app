@@ -25,7 +25,7 @@ class _QuranTabState extends State<QuranTab> {
         suraNameEN: "Al-fatiha", suraNameAR: "الفاتحة", suraVerses: "7 verses")
   ];
 
-  List<SuraDetails> sura = [
+  List<SuraDetails> suraList = [
     SuraDetails(id: 1, nameEN: "Al-Fatiha", nameAR: "الفاتحه", verses: 7),
     SuraDetails(id: 2, nameEN: "Al-Baqarah", nameAR: "البقرة", verses: 286),
     SuraDetails(id: 3, nameEN: "Aal-E-Imran", nameAR: "آل عمران", verses: 200),
@@ -246,17 +246,21 @@ class _QuranTabState extends State<QuranTab> {
               physics: const NeverScrollableScrollPhysics(),
               itemBuilder: (context, index) => GestureDetector(
                 onTap: () {
-                  Navigator.pushNamed(context, QuranDetails.routeName);
+                  Navigator.pushNamed(
+                    context,
+                    QuranDetails.routeName,
+                    arguments: suraList[index],
+                  );
                 },
                 child: SuraCardWidget(
-                  suraDetails: sura[index],
+                  suraDetails: suraList[index],
                 ),
               ),
               separatorBuilder: (context, index) => const Divider(
                 indent: 60,
                 endIndent: 60,
               ),
-              itemCount: sura.length,
+              itemCount: suraList.length,
             ),
           ],
         ),
