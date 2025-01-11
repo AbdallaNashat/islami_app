@@ -22,4 +22,9 @@ abstract class AppAssets {
   static String hadithCard = "assets/images/Hadith Card.png";
   static String seb7aBG = "assets/images/seb7aBG.png";
   static String seb7aCount = "assets/images/seb7aBody.png";
+  static String onBoard1Img = "assets/images/Frame 3.png";
+  static String onBoard2Img = "assets/images/onBoard2.png";
+  static String onBoard3Img = "assets/images/onBoard3.png";
+  static String onBoard4Img = "assets/images/onBoard4.png";
+  static String onBoard5Img = "assets/images/radio.png";
 }
