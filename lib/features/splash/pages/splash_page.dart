@@ -1,12 +1,12 @@
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
-import 'package:islami/features/layout/pages/layout_page.dart';
+import 'package:islami/features/layout/pages/onboarding/onbordaing_pages.dart';
 
 import '../../../core/constants/app_assets.dart';
 
 class SplashPage extends StatefulWidget {
   static String routeName = "Splash";
-  static final Duration _duration = Duration(
+  static const Duration _duration = Duration(
     milliseconds: 1750,
   );
 
@@ -21,8 +21,8 @@ class _SplashPageState extends State<SplashPage> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    Future.delayed(Duration(seconds: 2), () {
-      Navigator.pushReplacementNamed(context, LayoutPage.routeName);
+    Future.delayed(const Duration(seconds: 2), () {
+      Navigator.pushReplacementNamed(context, IntroScreen.routeName);
     });
   }
 
