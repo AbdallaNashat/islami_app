@@ -27,4 +27,9 @@ abstract class AppAssets {
   static String onBoard3Img = "assets/images/onBoard3.png";
   static String onBoard4Img = "assets/images/onBoard4.png";
   static String onBoard5Img = "assets/images/radio.png";
+  static String radioBG = "assets/images/Radioo_BG.png";
+  static String bG = "assets/images/Mosque-02.png";
+  static String timeBG = "assets/images/timeBG.png";
+  static String morningAzkar = "assets/images/MorningAzkar.png";
+  static String eveningAzkar = "assets/images/EveningAzkar.png";
 }

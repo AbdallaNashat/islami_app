@@ -24,7 +24,7 @@ class _LayoutPageState extends State<LayoutPage> {
     const QuranTab(),
     const HadithTab(),
     const SebhaTab(),
-    const RadioTab(),
+    RadioTab(),
     const TimeTab(),
   ];
 
