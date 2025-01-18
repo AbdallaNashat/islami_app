@@ -144,6 +144,7 @@ class _QuranTabState extends State<QuranTab> {
     SuraDetails(id: 114, nameEN: "An-Nas", nameAR: "الناس", verses: 6),
   ];
 
+  String searchQuery = '';
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -168,6 +169,10 @@ class _QuranTabState extends State<QuranTab> {
               padding: const EdgeInsets.symmetric(horizontal: 20.0),
               child: TextFormField(
                 cursorColor: AppColors.primaryColor,
+                onChanged: (value) {
+                  searchQuery = value;
+                  setState(() {});
+                },
                 style: TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.bold,
@@ -206,62 +211,70 @@ class _QuranTabState extends State<QuranTab> {
                 ),
               ),
             ),
-            Padding(
-              padding:
-                  const EdgeInsets.symmetric(horizontal: 20.0, vertical: 15.0),
-              child: Text(
-                "Most Recently",
-                style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
-                  color: AppColors.titleTextColor,
-                ),
+            Visibility(
+              visible: searchQuery.isEmpty,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 20.0, vertical: 15.0),
+                    child: Text(
+                      "Most Recently",
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                        color: AppColors.titleTextColor,
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 155,
+                    child: ListView.builder(
+                      padding: const EdgeInsets.symmetric(horizontal: 10),
+                      scrollDirection: Axis.horizontal,
+                      itemBuilder: (context, index) => RecentlyCardWidget(
+                        recentData: recentDataList[index],
+                      ),
+                      itemCount: recentDataList.length,
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 20.0, vertical: 15.0),
+                    child: Text(
+                      "Sura Name",
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.bold,
+                        color: AppColors.titleTextColor,
+                      ),
+                    ),
+                  ),
+                  ListView.separated(
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    itemBuilder: (context, index) => GestureDetector(
+                      onTap: () {
+                        Navigator.pushNamed(
+                          context,
+                          QuranDetails.routeName,
+                          arguments: suraList[index],
+                        );
+                      },
+                      child: SuraCardWidget(
+                        suraDetails: suraList[index],
+                      ),
+                    ),
+                    separatorBuilder: (context, index) => const Divider(
+                      indent: 60,
+                      endIndent: 60,
+                    ),
+                    itemCount: suraList.length,
+                  ),
+                ],
               ),
-            ),
-            SizedBox(
-              height: 155,
-              child: ListView.builder(
-                padding: const EdgeInsets.symmetric(horizontal: 10),
-                scrollDirection: Axis.horizontal,
-                itemBuilder: (context, index) => RecentlyCardWidget(
-                  recentData: recentDataList[index],
-                ),
-                itemCount: recentDataList.length,
-              ),
-            ),
-            Padding(
-              padding:
-                  const EdgeInsets.symmetric(horizontal: 20.0, vertical: 15.0),
-              child: Text(
-                "Sura Name",
-                style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
-                  color: AppColors.titleTextColor,
-                ),
-              ),
-            ),
-            ListView.separated(
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
-              itemBuilder: (context, index) => GestureDetector(
-                onTap: () {
-                  Navigator.pushNamed(
-                    context,
-                    QuranDetails.routeName,
-                    arguments: suraList[index],
-                  );
-                },
-                child: SuraCardWidget(
-                  suraDetails: suraList[index],
-                ),
-              ),
-              separatorBuilder: (context, index) => const Divider(
-                indent: 60,
-                endIndent: 60,
-              ),
-              itemCount: suraList.length,
-            ),
+            )
           ],
         ),
       ),
