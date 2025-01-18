@@ -21,7 +21,8 @@ abstract class AppAssets {
   static String quranDetailsBG = "assets/images/Soura_Details_Screen.png";
   static String hadithCard = "assets/images/Hadith Card.png";
   static String seb7aBG = "assets/images/seb7aBG.png";
-  static String seb7aCount = "assets/images/seb7aBody.png";
+
+  //static String seb7aCount = "assets/images/seb7aBody.png";
   static String onBoard1Img = "assets/images/Frame 3.png";
   static String onBoard2Img = "assets/images/onBoard2.png";
   static String onBoard3Img = "assets/images/onBoard3.png";
@@ -32,4 +33,6 @@ abstract class AppAssets {
   static String timeBG = "assets/images/timeBG.png";
   static String morningAzkar = "assets/images/MorningAzkar.png";
   static String eveningAzkar = "assets/images/EveningAzkar.png";
+  static String headSeb7a = "assets/images/seb7a head.png";
+  static String seb7aBody = "assets/images/SebhaBody 1.png";
 }

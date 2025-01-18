@@ -12,6 +12,8 @@ class HadithCard extends StatefulWidget {
 
 class _HadithCardState extends State<HadithCard> {
   @override
+  //var args = ModalRoute.of(context)?.settings.arguments as HadithDetails;
+
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
@@ -43,10 +45,10 @@ class _HadithCardState extends State<HadithCard> {
     );
   }
 
-  loadHadithData() async {
-    await rootBundle.loadString("assets/files/hadith");
+  loadHadithData(dynamic hadithId) async {
+    await rootBundle.loadString("assets/files/hadith$hadithId");
     setState(() {
-      //List<String> allHadith  = content.split("\n");
+      //List<String> HadithData  = content.split"\n");
     });
   }
 }

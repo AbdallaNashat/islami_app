@@ -22,9 +22,9 @@ class _LayoutPageState extends State<LayoutPage> {
   int selectedIndex = 0;
   List<Widget> tabs = [
     const QuranTab(),
-    const HadithTab(),
+    HadithTab(),
     const SebhaTab(),
-    RadioTab(),
+    const RadioTab(),
     const TimeTab(),
   ];
 

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:islami/core/themes/app_colors.dart';
+import 'package:islami/features/layout/pages/time/widgets/azkar.dart';
 
 import '../../../../core/constants/app_assets.dart';
 
@@ -23,7 +23,7 @@ class TimeTab extends StatelessWidget {
           // Content
           Column(
             children: [
-              const SizedBox(height: 170), // Adjust for top padding
+              const SizedBox(height: 170),
               // Prayer Time Card
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 16.0),
@@ -109,13 +109,15 @@ class TimeTab extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    _buildAzkarCard(
+                    Azkar(
                       title: "Evening Azkar",
                       image: AppAssets.eveningAzkar,
+                      onTap: () {},
                     ),
-                    _buildAzkarCard(
+                    Azkar(
                       title: "Morning Azkar",
                       image: AppAssets.morningAzkar,
+                      onTap: () {},
                     ),
                   ],
                 ),
@@ -156,36 +158,6 @@ class TimeTab extends StatelessWidget {
           ),
         ),
       ],
-    );
-  }
-
-  Widget _buildAzkarCard({required String title, required String image}) {
-    return Container(
-      width: 150,
-      padding: const EdgeInsets.all(12),
-      decoration: BoxDecoration(
-        color: AppColors.secondaryColor,
-        borderRadius: BorderRadius.circular(20),
-      ),
-      child: Column(
-        children: [
-          Image.asset(
-            image,
-            height: 80,
-            fit: BoxFit.contain,
-          ),
-          const SizedBox(height: 10),
-          Text(
-            title,
-            style: TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.bold,
-              color: AppColors.white,
-            ),
-            textAlign: TextAlign.center,
-          ),
-        ],
-      ),
     );
   }
 }

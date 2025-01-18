@@ -318,7 +318,7 @@ class PageIndicator extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
           if (currentPageIndex > 0)
             TextButton(
@@ -333,11 +333,17 @@ class PageIndicator extends StatelessWidget {
                 ),
               ),
             ),
+          SizedBox(
+            width: 50,
+          ),
           TabPageSelector(
             controller: tabController,
             color: AppColors.tabColor,
             selectedColor: AppColors.primaryColor,
             indicatorSize: 10,
+          ),
+          SizedBox(
+            width: 50,
           ),
           TextButton(
             onPressed: () {
