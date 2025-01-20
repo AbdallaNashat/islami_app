@@ -67,7 +67,6 @@ flutter:
     - assets/images/
     - assets/icons/
     - assets/files/
-    - assets/files/hadith/
     - assets/fonts/
 
     #   - images/a_dot_burr.jpeg

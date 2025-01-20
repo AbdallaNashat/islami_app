@@ -333,7 +333,7 @@ class PageIndicator extends StatelessWidget {
                 ),
               ),
             ),
-          SizedBox(
+          const SizedBox(
             width: 50,
           ),
           TabPageSelector(
@@ -342,7 +342,7 @@ class PageIndicator extends StatelessWidget {
             selectedColor: AppColors.primaryColor,
             indicatorSize: 10,
           ),
-          SizedBox(
+          const SizedBox(
             width: 50,
           ),
           TextButton(

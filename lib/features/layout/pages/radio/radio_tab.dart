@@ -74,6 +74,7 @@ class _RadioTabState extends State<RadioTab>
                     indicatorColor: AppColors.primaryColor,
                     labelColor: AppColors.primaryColor,
                     unselectedLabelColor: AppColors.white,
+                    dividerColor: Colors.transparent,
                     tabs: const [
                       Tab(text: "Radio"),
                       Tab(text: "Reciters"),

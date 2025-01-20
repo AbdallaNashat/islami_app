@@ -1,20 +1,20 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:islami/core/constants/app_assets.dart';
+import 'package:islami/models/hadith_data.dart';
 
-class HadithCard extends StatefulWidget {
-  const HadithCard({super.key});
+class HadithCard extends StatelessWidget {
+  final HadithData hadithData;
+
+  const HadithCard({
+    super.key,
+    required this.hadithData,
+  });
 
   @override
-  State<HadithCard> createState() => _HadithCardState();
-}
-
-class _HadithCardState extends State<HadithCard> {
-  @override
-  //var args = ModalRoute.of(context)?.settings.arguments as HadithDetails;
-
-  Widget build(BuildContext context) {
+  Widget build(
+    BuildContext context,
+  ) {
     return Container(
       width: double.infinity,
       margin: const EdgeInsets.only(
@@ -28,27 +28,37 @@ class _HadithCardState extends State<HadithCard> {
           fit: BoxFit.fill,
         ),
       ),
-      child: const Column(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          SizedBox(
+          const SizedBox(
             height: 30,
           ),
           Text(
-            "الحديث الأول",
-            style: TextStyle(
+            hadithData.hadithTitle,
+            style: const TextStyle(
               fontWeight: FontWeight.bold,
-              fontSize: 24,
+              fontSize: 30,
             ),
           ),
+          Expanded(
+              child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 20.0),
+            child: ListView(
+              children: [
+                Text(
+                  textAlign: TextAlign.center,
+                  hadithData.hadithContent,
+                  style: const TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 16,
+                  ),
+                ),
+              ],
+            ),
+          ))
         ],
       ),
     );
-  }
-
-  loadHadithData(dynamic hadithId) async {
-    await rootBundle.loadString("assets/files/hadith$hadithId");
-    setState(() {
-      //List<String> HadithData  = content.split"\n");
-    });
   }
 }

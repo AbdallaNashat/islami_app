@@ -1,14 +1,6 @@
 class HadithData {
-  final String nameAR;
-  final int id;
+  final String hadithTitle;
+  final String hadithContent;
 
-  HadithData({
-    required this.nameAR,
-    required this.id,
-  });
-
-  @override
-  String toString() {
-    return 'Hadith(id: $id,  nameAR: $nameAR, )';
-  }
+  HadithData({required this.hadithTitle, required this.hadithContent});
 }
