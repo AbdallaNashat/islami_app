@@ -1,5 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:islami/core/constants/local_storage_key.dart';
+import 'package:islami/core/services/local_storage_serv.dart';
 import 'package:islami/core/themes/app_colors.dart';
 
 import '../../../../core/constants/app_assets.dart';
@@ -23,6 +25,7 @@ class _IntroScreen extends State<IntroScreen> with TickerProviderStateMixin {
     super.initState();
     _pageViewController = PageController();
     _tabController = TabController(length: 5, vsync: this);
+    LocalStroageSrvices.setBool(LocalStorageKey.isFirstTimeRun, false);
   }
 
   @override

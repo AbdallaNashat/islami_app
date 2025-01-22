@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:islami/core/services/local_storage_serv.dart';
 import 'package:islami/features/layout/pages/hadith/hadith_tab.dart';
 import 'package:islami/features/layout/pages/onboarding/onbordaing_pages.dart';
 import 'package:islami/features/layout/pages/quran/quran_details.dart';
@@ -6,7 +7,10 @@ import 'package:islami/features/splash/pages/splash_page.dart';
 
 import 'features/layout/pages/layout_page.dart';
 
-void main() {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  await LocalStroageSrvices.init();
   runApp(const MyApp());
 }
 

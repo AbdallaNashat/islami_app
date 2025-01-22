@@ -396,13 +396,7 @@ class _QuranTabState extends State<QuranTab> {
                     shrinkWrap: true,
                     physics: const NeverScrollableScrollPhysics(),
                     itemBuilder: (context, index) => GestureDetector(
-                      onTap: () {
-                        Navigator.pushNamed(
-                          context,
-                          QuranDetails.routeName,
-                          arguments: suraList[index],
-                        );
-                      },
+                      onTap: () => _onSuraTab(index),
                       child: SuraCardWidget(
                         suraDetails: suraList[index],
                       ),
@@ -419,6 +413,14 @@ class _QuranTabState extends State<QuranTab> {
           ],
         ),
       ),
+    );
+  }
+
+  _onSuraTab(int index) {
+    Navigator.pushNamed(
+      context,
+      QuranDetails.routeName,
+      arguments: suraList[index],
     );
   }
 
