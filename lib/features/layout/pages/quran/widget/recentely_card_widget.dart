@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:islami/core/constants/app_assets.dart';
 import 'package:islami/core/themes/app_colors.dart';
-import 'package:islami/models/recent_data.dart';
+import 'package:islami/models/sura_data.dart';
 
 class RecentlyCardWidget extends StatelessWidget {
   const RecentlyCardWidget({
@@ -9,7 +9,7 @@ class RecentlyCardWidget extends StatelessWidget {
     required this.recentData,
   });
 
-  final RecentData recentData;
+  final SuraDetails recentData;
 
   @override
   Widget build(BuildContext context) {
@@ -28,21 +28,21 @@ class RecentlyCardWidget extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               Text(
-                recentData.suraNameEN,
+                recentData.nameEN,
                 style: const TextStyle(
                   fontSize: 24,
                   fontWeight: FontWeight.bold,
                 ),
               ),
               Text(
-                recentData.suraNameAR,
+                recentData.nameAR,
                 style: const TextStyle(
                   fontSize: 24,
                   fontWeight: FontWeight.bold,
                 ),
               ),
               Text(
-                recentData.suraVerses,
+                recentData.verses as String,
                 style: const TextStyle(
                   fontSize: 14,
                   fontWeight: FontWeight.bold,

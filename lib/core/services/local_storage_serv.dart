@@ -19,6 +19,16 @@ abstract class LocalStroageSrvices {
     return await preferences.setBool(key, value);
   }
 
+  static Future<bool> setList(String key, List<String> values) async {
+    return await preferences.setStringList(key, values);
+  }
+
+  static Future<bool> remove(
+    String key,
+  ) async {
+    return await preferences.remove(key);
+  }
+
   static bool? getBool(
     String key,
   ) {
@@ -31,5 +41,9 @@ abstract class LocalStroageSrvices {
 
   static String? getString(String key) {
     return preferences.getString(key);
+  }
+
+  static List<String>? getStringList(String key) {
+    return preferences.getStringList(key);
   }
 }

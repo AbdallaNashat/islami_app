@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:islami/core/constants/app_assets.dart';
+import 'package:islami/core/constants/local_storage_key.dart';
+import 'package:islami/core/services/local_storage_serv.dart';
 import 'package:islami/core/themes/app_colors.dart';
 import 'package:islami/features/layout/pages/quran/quran_details.dart';
 import 'package:islami/features/layout/pages/quran/widget/recentely_card_widget.dart';
 import 'package:islami/features/layout/pages/quran/widget/sura_card_widget.dart';
-import 'package:islami/models/recent_data.dart';
 import 'package:islami/models/sura_data.dart';
 
 class QuranTab extends StatefulWidget {
@@ -15,18 +16,18 @@ class QuranTab extends StatefulWidget {
 }
 
 class _QuranTabState extends State<QuranTab> {
-  List<RecentData> recentDataList = [
-    RecentData(
-      suraNameEN: "Al-Anbiya",
-      suraNameAR: "الأنبياء",
-      suraVerses: "112 verses",
-    ),
-    RecentData(
-        suraNameEN: "Al-fatiha", suraNameAR: "الفاتحة", suraVerses: "7 verses")
-  ];
+  @override
+  void initState() {
+    super.initState();
+    _loadRecentSura();
+  }
+
+  List<SuraDetails> recentDataList = [];
+
+  List<String> recentIndexSuraList = [];
 
   List<SuraDetails> searchSuraModel = [
-    SuraDetails(id: 1, nameEN: "Al-Fatiha", nameAR: "الفاتحه", verses: 7),
+    SuraDetails(id: 1, nameEN: "Al-Fatiha", nameAR: "الفاتحة", verses: 7),
     SuraDetails(id: 2, nameEN: "Al-Baqarah", nameAR: "البقرة", verses: 286),
     SuraDetails(id: 3, nameEN: "Aal-E-Imran", nameAR: "آل عمران", verses: 200),
     SuraDetails(id: 4, nameEN: "Al-Nisa'", nameAR: "النساء", verses: 176),
@@ -145,7 +146,7 @@ class _QuranTabState extends State<QuranTab> {
   ];
 
   List<SuraDetails> suraList = [
-    SuraDetails(id: 1, nameEN: "Al-Fatiha", nameAR: "الفاتحه", verses: 7),
+    SuraDetails(id: 1, nameEN: "Al-Fatiha", nameAR: "الفاتحة", verses: 7),
     SuraDetails(id: 2, nameEN: "Al-Baqarah", nameAR: "البقرة", verses: 286),
     SuraDetails(id: 3, nameEN: "Aal-E-Imran", nameAR: "آل عمران", verses: 200),
     SuraDetails(id: 4, nameEN: "Al-Nisa'", nameAR: "النساء", verses: 176),
@@ -264,8 +265,10 @@ class _QuranTabState extends State<QuranTab> {
   ];
 
   String searchQuery = '';
+
   @override
   Widget build(BuildContext context) {
+    var size = MediaQuery.of(context).size;
     return Container(
       decoration: BoxDecoration(
         image: DecorationImage(
@@ -276,152 +279,210 @@ class _QuranTabState extends State<QuranTab> {
         ),
       ),
       child: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Padding(
-              padding:
-                  const EdgeInsets.symmetric(horizontal: 20.0, vertical: 15),
-              child: Image.asset(AppAssets.islamiLogo),
-            ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20.0),
-              child: TextFormField(
-                cursorColor: AppColors.primaryColor,
-                onChanged: (value) {
-                  searchQuery = value;
-                  search();
-                  setState(() {});
-                },
-                style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.bold,
-                  color: AppColors.titleTextColor,
+        child: SafeArea(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 20.0,
                 ),
-                decoration: InputDecoration(
-                  hintText: "Sura Name",
-                  hintStyle: TextStyle(
+                child: Image.asset(
+                  AppAssets.islamiLogo,
+                  height: size.height * 0.15,
+                ),
+              ),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                child: TextFormField(
+                  cursorColor: AppColors.primaryColor,
+                  onChanged: (value) {
+                    searchQuery = value;
+                    search();
+                    setState(() {});
+                  },
+                  style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
                     color: AppColors.titleTextColor,
                   ),
-                  fillColor: AppColors.secondaryColor.withOpacity(0.5),
-                  filled: true,
-                  enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10.0),
-                    borderSide: BorderSide(
-                      color: AppColors.primaryColor,
+                  decoration: InputDecoration(
+                    hintText: "Sura Name",
+                    hintStyle: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                      color: AppColors.titleTextColor,
                     ),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10.0),
-                    borderSide: BorderSide(
-                      color: AppColors.primaryColor,
-                    ),
-                  ),
-                  prefixIcon: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: ImageIcon(
-                      AssetImage(
-                        AppAssets.quranIcon,
+                    fillColor: AppColors.secondaryColor.withOpacity(0.5),
+                    filled: true,
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10.0),
+                      borderSide: BorderSide(
+                        color: AppColors.primaryColor,
                       ),
-                      color: AppColors.primaryColor,
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10.0),
+                      borderSide: BorderSide(
+                        color: AppColors.primaryColor,
+                      ),
+                    ),
+                    prefixIcon: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: ImageIcon(
+                        AssetImage(
+                          AppAssets.quranIcon,
+                        ),
+                        color: AppColors.primaryColor,
+                      ),
                     ),
                   ),
                 ),
               ),
-            ),
-            Visibility(
-              visible: searchQuery.isEmpty,
-              replacement: ListView.separated(
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                itemBuilder: (context, index) => GestureDetector(
-                  onTap: () {
-                    Navigator.pushNamed(
-                      context,
-                      QuranDetails.routeName,
-                      arguments: searchSuraModel[index],
-                    );
-                  },
-                  child: SuraCardWidget(
-                    suraDetails: searchSuraModel[index],
+              Visibility(
+                visible: searchQuery.isEmpty,
+                replacement: ListView.separated(
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  itemBuilder: (context, index) => GestureDetector(
+                    onTap: () {
+                      Navigator.pushNamed(
+                        context,
+                        QuranDetails.routeName,
+                        arguments: searchSuraModel[index],
+                      );
+                    },
+                    child: SuraCardWidget(
+                      suraDetails: searchSuraModel[index],
+                    ),
                   ),
+                  separatorBuilder: (context, index) => const Divider(
+                    indent: 60,
+                    endIndent: 60,
+                  ),
+                  itemCount: searchSuraModel.length,
                 ),
-                separatorBuilder: (context, index) => const Divider(
-                  indent: 60,
-                  endIndent: 60,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 20.0, vertical: 15.0),
+                      child: Text(
+                        "Most Recently",
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                          color: AppColors.titleTextColor,
+                        ),
+                      ),
+                    ),
+                    SizedBox(
+                      height: 155,
+                      child: Visibility(
+                        visible: recentDataList.isNotEmpty,
+                        replacement: Center(
+                          child: Text(
+                            "No Recent Sura ",
+                            style: TextStyle(
+                              color: AppColors.primaryColor,
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                        child: ListView.builder(
+                          padding: const EdgeInsets.symmetric(horizontal: 10),
+                          scrollDirection: Axis.horizontal,
+                          itemBuilder: (context, index) => GestureDetector(
+                            onTap: () => Navigator.pushNamed(
+                              context,
+                              QuranDetails.routeName,
+                              arguments: recentIndexSuraList[index],
+                            ),
+                            child: RecentlyCardWidget(
+                              recentData: _loadRecentSura(),
+                            ),
+                          ),
+                          itemCount: recentDataList.length,
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 20.0, vertical: 15.0),
+                      child: Text(
+                        "Sura Name",
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                          color: AppColors.titleTextColor,
+                        ),
+                      ),
+                    ),
+                    ListView.separated(
+                      shrinkWrap: true,
+                      physics: const NeverScrollableScrollPhysics(),
+                      itemBuilder: (context, index) => GestureDetector(
+                        onTap: () => _onSuraTab(index),
+                        child: SuraCardWidget(
+                          suraDetails: suraList[index],
+                        ),
+                      ),
+                      separatorBuilder: (context, index) => const Divider(
+                        indent: 60,
+                        endIndent: 60,
+                      ),
+                      itemCount: suraList.length,
+                    ),
+                  ],
                 ),
-                itemCount: searchSuraModel.length,
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 20.0, vertical: 15.0),
-                    child: Text(
-                      "Most Recently",
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                        color: AppColors.titleTextColor,
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    height: 155,
-                    child: ListView.builder(
-                      padding: const EdgeInsets.symmetric(horizontal: 10),
-                      scrollDirection: Axis.horizontal,
-                      itemBuilder: (context, index) => RecentlyCardWidget(
-                        recentData: recentDataList[index],
-                      ),
-                      itemCount: recentDataList.length,
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 20.0, vertical: 15.0),
-                    child: Text(
-                      "Sura Name",
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                        color: AppColors.titleTextColor,
-                      ),
-                    ),
-                  ),
-                  ListView.separated(
-                    shrinkWrap: true,
-                    physics: const NeverScrollableScrollPhysics(),
-                    itemBuilder: (context, index) => GestureDetector(
-                      onTap: () => _onSuraTab(index),
-                      child: SuraCardWidget(
-                        suraDetails: suraList[index],
-                      ),
-                    ),
-                    separatorBuilder: (context, index) => const Divider(
-                      indent: 60,
-                      endIndent: 60,
-                    ),
-                    itemCount: suraList.length,
-                  ),
-                ],
-              ),
-            )
-          ],
+              )
+            ],
+          ),
         ),
       ),
     );
   }
 
   _onSuraTab(int index) {
+    _cacheSuraIndex(index);
+
     Navigator.pushNamed(
       context,
       QuranDetails.routeName,
       arguments: suraList[index],
     );
+  }
+
+  _cacheSuraIndex(int index) async {
+    var indexString = index.toString();
+    if (recentIndexSuraList.contains(indexString)) return;
+    if (recentIndexSuraList.length == 5) {
+      recentIndexSuraList.removeLast();
+    }
+
+    recentIndexSuraList.insert(0, indexString);
+    recentIndexSuraList.add(indexString);
+
+    await LocalStroageSrvices.setList(
+        LocalStorageKey.recentSura, recentIndexSuraList);
+    _loadRecentSura();
+    setState(() {});
+  }
+
+  _loadRecentSura() {
+    LocalStroageSrvices.remove(LocalStorageKey.recentSura);
+    recentIndexSuraList = [];
+    recentDataList = [];
+
+    recentIndexSuraList =
+        LocalStroageSrvices.getStringList(LocalStorageKey.recentSura) ?? [];
+    //recentDataList.clear();
+    for (var index in recentIndexSuraList) {
+      var indexInt = int.parse(index);
+      recentDataList.add(suraList[indexInt]);
+    }
   }
 
   void search() {
