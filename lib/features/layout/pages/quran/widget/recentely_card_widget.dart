@@ -42,7 +42,7 @@ class RecentlyCardWidget extends StatelessWidget {
                 ),
               ),
               Text(
-                recentData.verses as String,
+                recentData.verses.toString(),
                 style: const TextStyle(
                   fontSize: 14,
                   fontWeight: FontWeight.bold,

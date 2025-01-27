@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:islami/core/constants/app_assets.dart';
 import 'package:islami/core/constants/local_storage_key.dart';
@@ -398,10 +400,10 @@ class _QuranTabState extends State<QuranTab> {
                             onTap: () => Navigator.pushNamed(
                               context,
                               QuranDetails.routeName,
-                              arguments: recentIndexSuraList[index],
+                              arguments: suraList[index],
                             ),
                             child: RecentlyCardWidget(
-                              recentData: _loadRecentSura(),
+                              recentData: recentDataList[index],
                             ),
                           ),
                           itemCount: recentDataList.length,
@@ -463,21 +465,23 @@ class _QuranTabState extends State<QuranTab> {
     }
 
     recentIndexSuraList.insert(0, indexString);
-    recentIndexSuraList.add(indexString);
+    log(recentIndexSuraList.length.toString());
 
     await LocalStroageSrvices.setList(
-        LocalStorageKey.recentSura, recentIndexSuraList);
+      LocalStorageKey.recentSura,
+      recentIndexSuraList,
+    );
     _loadRecentSura();
     setState(() {});
   }
 
   _loadRecentSura() {
-    LocalStroageSrvices.remove(LocalStorageKey.recentSura);
     recentIndexSuraList = [];
     recentDataList = [];
 
     recentIndexSuraList =
         LocalStroageSrvices.getStringList(LocalStorageKey.recentSura) ?? [];
+    log(recentIndexSuraList.length.toString());
     //recentDataList.clear();
     for (var index in recentIndexSuraList) {
       var indexInt = int.parse(index);
