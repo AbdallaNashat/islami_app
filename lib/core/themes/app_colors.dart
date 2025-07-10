@@ -6,4 +6,5 @@ class AppColors {
   static Color white = const Color(0xffffffff);
   static Color titleTextColor = const Color(0xffFEFFE8);
   static Color tabColor = const Color(0xff707070);
+  static Color pray = const Color(0xff856B3F);
 }

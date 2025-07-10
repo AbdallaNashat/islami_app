@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:islami/core/themes/app_colors.dart';
 import 'package:islami/features/layout/pages/time/widgets/azkar.dart';
 
 import '../../../../core/constants/app_assets.dart';
@@ -30,7 +31,9 @@ class TimeTab extends StatelessWidget {
                 child: Container(
                   padding: const EdgeInsets.all(16),
                   decoration: BoxDecoration(
-                    color: Colors.amber.withOpacity(0.9),
+                    image: DecorationImage(
+                        image: AssetImage(AppAssets.prayBG), fit: BoxFit.fill),
+                    color: AppColors.pray,
                     borderRadius: BorderRadius.circular(20),
                   ),
                   child: Column(

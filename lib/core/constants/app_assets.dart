@@ -35,4 +35,5 @@ abstract class AppAssets {
   static String eveningAzkar = "assets/images/EveningAzkar.png";
   static String headSeb7a = "assets/images/seb7a head.png";
   static String seb7aBody = "assets/images/SebhaBody 1.png";
+  static String prayBG = "assets/images/PrayTimeBG.png";
 }
