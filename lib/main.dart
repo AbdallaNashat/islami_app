@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:islami/core/services/api/models/di/di.dart';
 import 'package:islami/core/services/local_storage_serv.dart';
 import 'package:islami/features/layout/pages/hadith/hadith_tab.dart';
 import 'package:islami/features/layout/pages/onboarding/onbordaing_pages.dart';
@@ -11,6 +12,7 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   await LocalStroageSrvices.init();
+  configureDependencies();
   runApp(const MyApp());
 }
 
